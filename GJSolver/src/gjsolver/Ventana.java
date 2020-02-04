@@ -322,17 +322,21 @@ public class Ventana extends javax.swing.JFrame {
         if(jfcSelector.showOpenDialog(getContentPane())==JFileChooser.APPROVE_OPTION){
             try {
                 File file=jfcSelector.getSelectedFile();
+                System.out.println("Abrio el archivo");
                 fr = new FileReader (file);
                 br = new BufferedReader(fr);
-                String texto = null;
-                while((texto+=br.readLine())!=null){
-                
+                String texto,todo="";
+                while((texto=br.readLine())!=null){
+                    System.out.println(texto);
+                    todo+=texto+"\n";
                 } 
-                String Filas[]=texto.split("\n");
+                System.out.println(todo);
+                String Filas[]=todo.split("\n");
                 String Columnas[] = null;
                 Columnas=Filas[0].split(" ");
                 filas=Filas.length;
                 columnas=Columnas.length;
+                System.out.println("Filas: "+filas+"\nColumnas: "+columnas);
                 Matriz=new int[filas][columnas];
                 for (int i=0;i<Filas.length;i++) {
                     Columnas = Filas[i].split(" ");
