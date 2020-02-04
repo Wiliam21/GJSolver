@@ -19,19 +19,8 @@ public class Venta extends javax.swing.JFrame {
     int filas,columnas;
     int Matriz[][];
     public Venta() {
-        filas=Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad de filas: "));
-        columnas=Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad de columnas: "));
         initComponents();
-        DefaultTableModel modelo=(DefaultTableModel)tblMatriz.getModel();
-        modelo.setColumnCount(columnas);
-        modelo.setRowCount(filas);
-        Matriz=new int[columnas][filas];
-        for(int i=0;i<columnas;i++){
-            for(int j=0;j<filas;j++){
-                Matriz[i][j]=0;
-                modelo.setValueAt(Matriz[i][j], j, i);
-            }
-        }
+        RedimensionarTabla();
         setVisible(true);
         setLocationRelativeTo(null);
     }
@@ -48,8 +37,15 @@ public class Venta extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMatriz = new javax.swing.JTable();
-        btnResolver = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         btnCargar = new javax.swing.JButton();
+        btnRedimensionar = new javax.swing.JButton();
+        btnResolver = new javax.swing.JButton();
+        btnMenosFilas = new javax.swing.JButton();
+        btnMenosColumnas = new javax.swing.JButton();
+        btnMasFilas = new javax.swing.JButton();
+        btnMasColumnas = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +61,23 @@ public class Venta extends javax.swing.JFrame {
         tblMatriz.setEditingRow(0);
         jScrollPane1.setViewportView(tblMatriz);
 
+        btnCargar.setFont(new java.awt.Font("Trebuchet MS", 0, 10)); // NOI18N
+        btnCargar.setText("Cargar matriz desde archivo");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+
+        btnRedimensionar.setFont(new java.awt.Font("Trebuchet MS", 0, 10)); // NOI18N
+        btnRedimensionar.setText("Redimesionar");
+        btnRedimensionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedimensionarActionPerformed(evt);
+            }
+        });
+
+        btnResolver.setFont(new java.awt.Font("Trebuchet MS", 0, 10)); // NOI18N
         btnResolver.setText("Resolver Matriz");
         btnResolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,32 +85,111 @@ public class Venta extends javax.swing.JFrame {
             }
         });
 
-        btnCargar.setText("Cargar matriz desde archivo");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(btnRedimensionar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnResolver)
+                .addGap(0, 4, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnResolver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRedimensionar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        btnMenosFilas.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        btnMenosFilas.setText("-");
+        btnMenosFilas.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMenosFilas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenosFilasActionPerformed(evt);
+            }
+        });
+
+        btnMenosColumnas.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        btnMenosColumnas.setText("-");
+        btnMenosColumnas.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMenosColumnas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenosColumnasActionPerformed(evt);
+            }
+        });
+
+        btnMasFilas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnMasFilas.setText("+");
+        btnMasFilas.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMasFilas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMasFilasActionPerformed(evt);
+            }
+        });
+
+        btnMasColumnas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnMasColumnas.setText("+");
+        btnMasColumnas.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMasColumnas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMasColumnasActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Gaus-Jordan");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnMenosColumnas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCargar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnResolver)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(btnMenosFilas)
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMasFilas)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMasColumnas)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnMenosFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnResolver, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(btnCargar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(btnMenosColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnMasColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(btnMasFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -106,6 +198,32 @@ public class Venta extends javax.swing.JFrame {
     private void btnResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResolverActionPerformed
         ObtenerMatriz();
     }//GEN-LAST:event_btnResolverActionPerformed
+
+    private void btnRedimensionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedimensionarActionPerformed
+        RedimensionarTabla();
+    }//GEN-LAST:event_btnRedimensionarActionPerformed
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void btnMasColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasColumnasActionPerformed
+        AgregarQuitarColumnas(1);
+    }//GEN-LAST:event_btnMasColumnasActionPerformed
+
+    private void btnMenosFilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenosFilasActionPerformed
+        if(filas>0)
+            AgregarQuitarFilas(-1);
+    }//GEN-LAST:event_btnMenosFilasActionPerformed
+
+    private void btnMenosColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenosColumnasActionPerformed
+        if(columnas>0)    
+            AgregarQuitarColumnas(-1);
+    }//GEN-LAST:event_btnMenosColumnasActionPerformed
+
+    private void btnMasFilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasFilasActionPerformed
+        AgregarQuitarFilas(1);
+    }//GEN-LAST:event_btnMasFilasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,25 +259,71 @@ public class Venta extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    public void AgregarQuitarColumnas(int n){
+        columnas+=n;
+        DefaultTableModel modelo=(DefaultTableModel)tblMatriz.getModel();
+        modelo.setColumnCount(columnas);
+        modelo.setRowCount(filas);
+        if(n>0){
+            for(int i=0;i<filas;i++){
+                modelo.setValueAt(0, i, columnas-1);
+            }
+        }
+    }
+    
+    public void AgregarQuitarFilas(int n){
+        filas+=n;
+        DefaultTableModel modelo=(DefaultTableModel)tblMatriz.getModel();
+        modelo.setColumnCount(columnas);
+        modelo.setRowCount(filas);
+        if(n>0){
+            for(int i=0;i<columnas;i++){
+                modelo.setValueAt(0, filas-1, i);
+            }
+        }
+    }
+    
+    public void RedimensionarTabla(){
+        filas=Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad de filas: "));
+        columnas=Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad de columnas: "));
+        DefaultTableModel modelo=(DefaultTableModel)tblMatriz.getModel();
+        modelo.setColumnCount(columnas);
+        modelo.setRowCount(filas);
+        for(int i=0;i<filas;i++){
+            for(int j=0;j<columnas;j++){
+                modelo.setValueAt(0, i,j);
+            }
+        }
+    }
+    
     public void ObtenerMatriz(){
+        Matriz=new int[filas][columnas];
+        //Obtiene el valor de cada celda y lo guarda en la matriz
         for(int i=0;i<filas;i++){
             for(int j=0;j<columnas;j++){
                 Matriz[i][j]=Integer.parseInt(tblMatriz.getValueAt(i,j).toString());
             }
-        }
+        }/*Test para ver que obtenga la matriz que esta en la tabla
         for(int i=0;i<filas;i++){
             for(int j=0;j<columnas;j++){
                 System.out.print(" "+Matriz[i][j]);
             }
             System.out.print("\n");
-        }
+        }*/
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnMasColumnas;
+    private javax.swing.JButton btnMasFilas;
+    private javax.swing.JButton btnMenosColumnas;
+    private javax.swing.JButton btnMenosFilas;
+    private javax.swing.JButton btnRedimensionar;
     private javax.swing.JButton btnResolver;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblMatriz;
     // End of variables declaration//GEN-END:variables
