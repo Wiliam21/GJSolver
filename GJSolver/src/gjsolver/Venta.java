@@ -5,8 +5,16 @@
  */
 package gjsolver;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -34,13 +42,13 @@ public class Venta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMatriz = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnCargar = new javax.swing.JButton();
         btnRedimensionar = new javax.swing.JButton();
         btnResolver = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
         btnMenosFilas = new javax.swing.JButton();
         btnMenosColumnas = new javax.swing.JButton();
         btnMasFilas = new javax.swing.JButton();
@@ -85,24 +93,33 @@ public class Venta extends javax.swing.JFrame {
             }
         });
 
+        btnExportar.setText("Exportar Matriz");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(btnRedimensionar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnResolver)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnResolver, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCargar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRedimensionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExportar, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnResolver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnRedimensionar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRedimensionar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 2, Short.MAX_VALUE)
+                        .addComponent(btnResolver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         btnMenosFilas.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
@@ -150,9 +167,9 @@ public class Venta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(btnMenosColumnas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -175,20 +192,18 @@ public class Venta extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(btnMenosColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(btnMasColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnMasColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMenosColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMasFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(19, 19, 19))
         );
 
@@ -204,7 +219,7 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRedimensionarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        // TODO add your handling code here:
+        AbrirArchivo();
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnMasColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasColumnasActionPerformed
@@ -297,6 +312,60 @@ public class Venta extends javax.swing.JFrame {
         }
     }
     
+    public void AbrirArchivo(){
+        FileReader fr = null;
+        BufferedReader br = null;
+        JFileChooser jfcSelector =new JFileChooser();
+        FileNameExtensionFilter filter =new FileNameExtensionFilter("TXT", "txt");
+        jfcSelector.setFileFilter(filter);
+        if(jfcSelector.showOpenDialog(getContentPane())==JFileChooser.APPROVE_OPTION){
+            try {
+                File file=jfcSelector.getSelectedFile();
+                fr = new FileReader (file);
+                br = new BufferedReader(fr);
+                String texto = null;
+                while((texto+=br.readLine())!=null){
+                
+                } 
+                String Filas[]=texto.split("\n");
+                String Columnas[] = null;
+                Columnas=Filas[0].split(" ");
+                filas=Filas.length;
+                columnas=Columnas.length;
+                Matriz=new int[filas][columnas];
+                for (int i=0;i<Filas.length;i++) {
+                    Columnas = Filas[i].split(" ");
+                    for (int j = 0; j < Columnas.length; j++) {
+                        Matriz[i][j]=Integer.parseInt(Columnas[j]);
+                    }
+                }
+                PonerMatriz();
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showInternalMessageDialog(this,"Error al abrir el archivo");
+            }finally{
+                try{                    
+                   if( null != fr ){   
+                      fr.close();     
+                   }                  
+                }catch (Exception e2){ 
+                   e2.printStackTrace();
+                }
+             }
+         }
+    }
+    
+    public void PonerMatriz(){
+        DefaultTableModel modelo=(DefaultTableModel)tblMatriz.getModel();
+        modelo.setColumnCount(columnas);
+        modelo.setRowCount(filas);
+        for(int i=0;i<filas;i++){
+            for(int j=0;j<columnas;j++){
+                modelo.setValueAt(Matriz[i][j], i,j);
+            }
+        }
+    }
+    
     public void ObtenerMatriz(){
         Matriz=new int[filas][columnas];
         //Obtiene el valor de cada celda y lo guarda en la matriz
@@ -315,13 +384,13 @@ public class Venta extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnMasColumnas;
     private javax.swing.JButton btnMasFilas;
     private javax.swing.JButton btnMenosColumnas;
     private javax.swing.JButton btnMenosFilas;
     private javax.swing.JButton btnRedimensionar;
     private javax.swing.JButton btnResolver;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
