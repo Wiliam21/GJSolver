@@ -10,7 +10,7 @@ public class GJSolver {
 
     public static void main(String[] args) {
         
-        Venta v=new Venta();
+        Ventana v=new Ventana();
         
     }
     
