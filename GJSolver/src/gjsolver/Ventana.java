@@ -314,10 +314,11 @@ public class Ventana extends javax.swing.JFrame {
     }
     
     public void AbrirArchivo(){
+        Boolean error=false;
         FileReader fr = null;
         BufferedReader br = null;
         JFileChooser jfcSelector =new JFileChooser();
-        FileNameExtensionFilter filter =new FileNameExtensionFilter("TXT", "txt");
+        FileNameExtensionFilter filter =new FileNameExtensionFilter(".txt", "txt");
         jfcSelector.setFileFilter(filter);
         if(jfcSelector.showOpenDialog(getContentPane())==JFileChooser.APPROVE_OPTION){
             try {
