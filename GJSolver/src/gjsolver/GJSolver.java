@@ -1,16 +1,17 @@
 package gjsolver;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author apple
+ * @author Wiliam
  */
 public class GJSolver {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        Venta v=new Venta();
+        
     }
     
 }
