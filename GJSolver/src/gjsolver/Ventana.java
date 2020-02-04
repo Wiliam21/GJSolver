@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
@@ -94,6 +96,11 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         btnExportar.setText("Exportar Matriz");
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -240,6 +247,10 @@ public class Ventana extends javax.swing.JFrame {
         AgregarQuitarFilas(1);
     }//GEN-LAST:event_btnMasFilasActionPerformed
 
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        ExportarMatriz();
+    }//GEN-LAST:event_btnExportarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -314,7 +325,6 @@ public class Ventana extends javax.swing.JFrame {
     }
     
     public void AbrirArchivo(){
-        Boolean error=false;
         FileReader fr = null;
         BufferedReader br = null;
         JFileChooser jfcSelector =new JFileChooser();
@@ -359,6 +369,44 @@ public class Ventana extends javax.swing.JFrame {
                 }
              }
          }
+    }
+    
+    public void ExportarMatriz(){
+        FileWriter fileWriter=null;
+        PrintWriter pw=null;
+        try {
+            JFileChooser jfc=new JFileChooser();
+            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if(jfc.showOpenDialog(getContentPane())==JFileChooser.APPROVE_OPTION){
+                File file=jfc.getSelectedFile();            
+                String direccion=file.getPath();
+                String NombreArchivo=JOptionPane.showInputDialog("Ingresa el nombre del archivo");
+                System.out.println(direccion);
+                System.out.println(NombreArchivo);
+                String Ruta=direccion+"\\"+NombreArchivo+".txt";
+                System.out.println(Ruta);
+                fileWriter=new FileWriter(Ruta);
+                pw=new PrintWriter(fileWriter);
+                ObtenerMatriz();
+                for(int i=0;i<filas;i++){
+                    for(int j=0;j<columnas;j++){
+                        pw.print(Matriz[i][j]+" ");
+                    }
+                    pw.print("\n");
+                }
+            }
+            
+        } catch (Exception e) {
+        }finally {
+           try {
+           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+           if (null != fileWriter)
+              fileWriter.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
     }
     
     public void PonerMatriz(){
